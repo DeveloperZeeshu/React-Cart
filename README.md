@@ -51,6 +51,8 @@ Users can browse products, view details, filter and sort products by category an
    ```bash
     http://localhost:5173
 
+> Make sure you have Node.js (v16 or higher) installed before running the project.
+
 ---
 
 # How to Use
