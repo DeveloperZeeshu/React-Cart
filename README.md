@@ -8,11 +8,17 @@ add items to the cart, and manage cart quantities. Cart state is persisted in lo
 
 ## Features
 
-- Home page displays products in a grid with **name, price, and thumbnail**
-- Product detail page with dynamic routing (`/product/:id`)
-- Multi-category filtering (fetches products from API)
+- Home page displays **4 products** in a grid, each showing:
+  - Product image
+  - Title
+  - Category
+  - Rating
+  - Price
+  - Add to Cart button
+- Clicking on the product image or title redirects to **Product Detail Page**
+- Separate **Products Page** displays all products with multi-category filtering and sorting
 - Sort products by price (ascending/descending)
-- Add to Cart functionality with **quantity input in Cart page**
+- Add to Cart functionality with **quantity input only on the Cart page**
 - Remove items from cart
 - Cart state persists in **localStorage**
 - Responsive design for mobile and desktop
@@ -46,7 +52,7 @@ add items to the cart, and manage cart quantities. Cart state is persisted in lo
    ```bash
     http://localhost:5173
 
---
+---
 
 # How to Use
 
