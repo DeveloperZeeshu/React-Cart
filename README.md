@@ -1,8 +1,7 @@
 # React Cart
 
-This is a basic e-commerce application built with React and TypeScript. 
-Users can browse products, view details, filter and sort products by category and price, 
-add items to the cart, and manage cart quantities. Cart state is persisted in localStorage.
+This is a basic e-commerce application built with **React** and **TypeScript**.  
+Users can browse products, view details, filter and sort products by category and price, add items to the cart, and manage cart quantities. Cart state is persisted in **localStorage**.
 
 ---
 
