@@ -94,3 +94,5 @@ Users can browse products, view details, filter and sort products by category an
 - Playwright for E2E testing
 
 
+## 🙋‍♂️ Author
+Made with ❤️ by Jeesan Abbas
