@@ -38,9 +38,9 @@ add items to the cart, and manage cart quantities. Cart state is persisted in lo
 
 5. **Start the development server:**
    ```bash
-    npm start
+    npm run dev
     # or
-    yarn start
+    yarn dev
 
 6. **Open your browser and go to:**
    ```bash
