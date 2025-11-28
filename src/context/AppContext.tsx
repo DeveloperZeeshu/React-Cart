@@ -51,7 +51,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
 
     const fetchProductById = useCallback(async (id?: number) => {
         try {
-            const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+            const res = await fetch(`${import.meta.env.VITE_API}/products/${id}`)
             const data: Product = await res.json()
             setProduct(data)
         } catch (err) {
@@ -59,11 +59,11 @@ const AppProvider = ({ children }: AppProviderProps) => {
         } finally {
             setProductLoading(false)
         }
-    }, [product])
+    }, [])
 
     const fetchAllProducts = useCallback(async () => {
         try {
-            const res = await fetch('https://fakestoreapi.com/products')
+            const res = await fetch(`${import.meta.env.VITE_API}/products`)
             const data: Product[] = await res.json()
             setProducts(data)
         } catch (err) {
