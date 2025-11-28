@@ -1,9 +1,7 @@
 import { useContext } from "react"
-import { FaCartShopping } from "react-icons/fa6"
-import { RxHamburgerMenu } from "react-icons/rx"
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { AppContext } from "../../../context/AppContext"
-import { ShoppingCart } from "lucide-react"
+import { Menu, ShoppingCart } from "lucide-react"
 
 interface NavItem {
     name: string
@@ -59,7 +57,7 @@ const Header = () => {
                     size={27} 
                     />
                 </div>
-                <RxHamburgerMenu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open" />
+                <Menu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open" />
 
             </div>
         </header>
