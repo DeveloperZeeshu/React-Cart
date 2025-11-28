@@ -1,5 +1,6 @@
 import Button from "./Button"
 import Input from "./Input"
+import { motion } from 'motion/react'
 
 interface CartTotalProps {
     cartTotal: number
@@ -8,7 +9,14 @@ interface CartTotalProps {
 
 const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
     return (
-        <div className="border border-gray-400 rounded-lg p-5 h-auto flex flex-col gap-6 max-w-md lg:min-w-md bg-white">
+        <motion.div
+            initial={{ opacity: 0, x: 80 }}
+            animate={{opacity: 1, x: 0}}
+            transition={{
+                duration: 0.6,
+                ease: 'easeOut'
+            }}
+            className="shadow-md hover:shadow-lg rounded-lg p-5 h-auto flex flex-col gap-6 max-w-md lg:min-w-md bg-white">
 
             <h3 className="text-xl font-medium">Cart Total</h3>
             <div className="flex flex-col gap-2">
@@ -50,7 +58,7 @@ const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
                 type="button"
                 text="Proceed to Checkout"
             />
-        </div>
+        </motion.div>
     )
 }
 

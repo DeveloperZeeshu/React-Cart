@@ -16,9 +16,9 @@ export interface Product {
 
 export interface AddToCart {
     id: number
-    title: string
-    image: string
-    price: number
+    title?: string
+    image?: string
+    price?: number
     quantity: number
 }
 

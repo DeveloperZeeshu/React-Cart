@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { FaCartShopping } from "react-icons/fa6"
 import { RxHamburgerMenu } from "react-icons/rx"
-import { Link, useNavigate } from "react-router-dom"
+import { Link, NavLink, useNavigate } from "react-router-dom"
 import { AppContext } from "../../../context/AppContext"
+import { ShoppingCart } from "lucide-react"
 
 interface NavItem {
     name: string
@@ -32,21 +33,34 @@ const Header = () => {
         },
     ]
     return (
-        <header className="flex justify-between items-center px-6 py-6 shadow-lg fixed w-full bg-white z-20">
+        <header className="flex justify-between items-center px-6 py-6 shadow-lg fixed w-full bg-white z-20 rounded-b-xl">
             <div>
-                <Link className="text-xl font-medium" to='/'>React Cart</Link>
+                <Link className="text-2xl font-medium text-blue-600" to='/'>React Cart</Link>
             </div>
             <nav className="lg:flex space-x-6 hidden">
                 {
                     navItems.map(item => (
-                        <Link key={item.name} to={item.slug}>{item.name}</Link>
+                        <NavLink
+                            className={({ isActive }) => `${isActive ? 'text-blue-600 font-bold' : ''}`}
+                            key={item.name}
+                            to={item.slug}>
+                            {item.name}
+                        </NavLink>
                     ))
                 }
             </nav>
             <div className="flex gap-6">
-                <FaCartShopping aria-hidden='true' onClick={() => navigate('/cart')} className="text-2xl cursor-pointer" />
-                <RxHamburgerMenu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open"/>
-                <span className="absolute h-4 flex justify-center items-center w-4 top-3 bg-red-500 rounded-full">{cartItems.length}</span>
+                <div className="flex">
+                    <span className="absolute h-4.5 flex justify-center items-center w-4.5 -mt-2 ml-3.5 text-white bg-blue-500 rounded-full">{cartItems.length}</span>
+                    <ShoppingCart 
+                    aria-hidden='true' 
+                    onClick={() => navigate('/cart')} 
+                    className="cursor-pointer"
+                    size={27} 
+                    />
+                </div>
+                <RxHamburgerMenu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open" />
+
             </div>
         </header>
     )

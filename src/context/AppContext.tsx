@@ -1,4 +1,4 @@
-import { createContext, useCallback, useState, type ReactNode, type SetStateAction } from "react";
+import { createContext, useCallback, useContext, useState, type ReactNode, type SetStateAction } from "react";
 import type { AddToCart, Product } from "../types/product";
 import toast from "react-hot-toast";
 
@@ -8,15 +8,19 @@ interface AppProviderProps {
 
 interface AppContextType {
     products: Product[]
-    fetchProducts: () => Promise<void>
+    product?: Product | null
     loading: boolean
     cartItems: AddToCart[]
-    addToCart: (finalProduct: AddToCart) => void
+    isSidebarOpen: boolean
     quantity: number
+    productLoading: boolean
+
+    addToCart: (finalProduct: AddToCart) => void
     setQuantity: (value: SetStateAction<number>) => void
     editQuantity: (id: number, newQuantity: number) => void
     removeFromCart: (id: number) => void
-    isSidebarOpen: boolean
+    fetchAllProducts: () => Promise<void>
+    fetchProductById: (id?: number) => Promise<void>
     openSidebar: () => void
     closeSidebar: () => void
 }
@@ -25,7 +29,9 @@ export const AppContext = createContext<AppContextType | null>(null)
 
 const AppProvider = ({ children }: AppProviderProps) => {
     const [products, setProducts] = useState<Product[]>([])
+    const [product, setProduct] = useState<Product | null>(null)
     const [loading, setLoading] = useState(true)
+    const [productLoading, setProductLoading] = useState<boolean>(true)
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
     const [quantity, setQuantity] = useState<number>(1)
     const [cartItems, setCartItems] = useState<AddToCart[]>(() => {
@@ -41,7 +47,21 @@ const AppProvider = ({ children }: AppProviderProps) => {
         setIsSidebarOpen(false)
     }
 
-    const fetchProducts = useCallback(async () => {
+    //Fetching Products
+
+    const fetchProductById = useCallback(async (id?: number) => {
+        try {
+            const res = await fetch(`https://fakestoreapi.com/products/${id}`)
+            const data: Product = await res.json()
+            setProduct(data)
+        } catch (err) {
+            console.log(err)
+        } finally {
+            setProductLoading(false)
+        }
+    }, [product])
+
+    const fetchAllProducts = useCallback(async () => {
         try {
             const res = await fetch('https://fakestoreapi.com/products')
             const data: Product[] = await res.json()
@@ -52,6 +72,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
             setLoading(false)
         }
     }, [])
+
+
+    //Cart Operations
 
     const addToCart = (product: AddToCart) => {
         setCartItems(prev => {
@@ -107,15 +130,18 @@ const AppProvider = ({ children }: AppProviderProps) => {
     return <AppContext.Provider value={{
         products,
         loading,
+        product,
         addToCart,
         cartItems,
         quantity,
         setQuantity,
         editQuantity,
         removeFromCart,
-        fetchProducts,
+        fetchAllProducts,
+        fetchProductById,
         isSidebarOpen,
         openSidebar,
+        productLoading,
         closeSidebar
     }}>
         {children}
@@ -125,5 +151,11 @@ const AppProvider = ({ children }: AppProviderProps) => {
 export default AppProvider
 
 
+export const useAppContext = () => {
+    const context = useContext(AppContext)
+    if (!context)
+        throw new Error('Context Api Error.')
 
+    return context
+}
 

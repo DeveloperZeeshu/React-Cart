@@ -1,56 +1,31 @@
 import { useParams } from "react-router-dom"
 import Container from "../components/container/Container"
-import { useCallback, useContext, useEffect, useState } from "react"
-import type { Product } from "../types/product"
-import { FaStar } from "react-icons/fa6"
-import Button from "../components/ui/Button"
-import { AppContext } from "../context/AppContext"
+import { useEffect } from "react"
+import { useAppContext } from "../context/AppContext"
+import { motion } from 'motion/react'
+import { fromLeftVariants, fromRightVariants } from "./Home"
 
 const ProductInDetail = () => {
-    const { id } = useParams()
-    const [product, setProduct] = useState<Product>()
-    const [loading, setLoading] = useState(true)
+    let { id } = useParams()
 
-    const context = useContext(AppContext)
-    if (!context)
-        throw new Error('Context Error.')
-
-    const { addToCart, quantity, setQuantity } = context
+    const { product, productLoading, fetchProductById, addToCart } = useAppContext()
 
     const handleAddToCart = () => {
-        if (!product) return
-
-        const finalProduct = {
-            id: product?.id,
-            image: product?.image,
+        const cartItemInfo = {
+            id: Number(id),
             title: product?.title,
+            image: product?.image,
             price: product?.price,
-            quantity
+            quantity: 1
         }
-        addToCart(finalProduct)
+        addToCart(cartItemInfo)
     }
 
-    const fetchProduct = useCallback(async () => {
-        try {
-            const res = await fetch(`https://fakestoreapi.com/products/${id}`)
-            const data: Product = await res.json()
-            setProduct(data)
-        } catch (err) {
-            console.log(err)
-        } finally {
-            setLoading(false)
-        }
-    }, [id])
-
     useEffect(() => {
-        fetchProduct()
-    }, [fetchProduct])
+        fetchProductById(Number(id))
+    }, [fetchProductById])
 
-    useEffect(() => {
-        setQuantity(1)
-    }, [id])
-
-    if (loading) {
+    if (productLoading) {
         return (
             <Container>
                 <div className="w-8 h-8 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin" />
@@ -58,47 +33,96 @@ const ProductInDetail = () => {
         )
     }
 
-    if (!product && !loading)
-        return <p>Product not found</p>
+    if (!product && !productLoading)
+        return <p>Product not found.</p>
 
     return (
         <Container>
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-white rounded-lg shadow-lg">
-                <div className="flex justify-center p-6">
+            <div className="flex flex-col justify-center lg:flex-row gap-6">
+                <motion.div
+                    variants={fromLeftVariants}
+                    initial='hidden'
+                    animate='show'
+                    className="flex justify-center bg-white rounded-lg shadow-md hover:shadow-lg p-5 lg:w-100">
                     <img
-                        className="h-auto max-h-90 w-auto object-contain"
+                        className="h-auto max-h-90 w-auto object-contain hover:scale-110 transition-all duration-300"
                         src={product?.image}
                         alt={product?.title}
                         loading="lazy"
                         decoding="async"
                     />
-                </div>
-                <div className="flex flex-col gap-5 p-6">
-                    <p className="w-full text-gray-500 text-sm">{product?.category.toUpperCase()}</p>
+                </motion.div>
+                <motion.div
+                    variants={fromRightVariants}
+                    initial='hidden'
+                    animate='show'
+                    className="flex flex-col gap-5 p-6 bg-white rounded-lg shadow-md hover:shadow-lg max-w-150">
+                    <div>
+                        <span
+                            className="text-blue-600 px-3 py-2 rounded-md text-sm bg-blue-100 font-semibold">
+                            {product?.category}
+                        </span>
+                    </div>
 
-                    <h3 className="font-medium text-xl">{product?.title}</h3>
+                    <span className="font-medium text-2xl">
+                        {product?.title}
+                    </span>
 
                     <div className="w-full">
-                        <p className="flex items-center gap-1"><span className="text-yellow-300"><FaStar /></span>{product?.rating?.rate} ({product?.rating?.count})</p>
+                        <p className="flex items-center text-sm gap-1">
+                            ⭐⭐⭐⭐
+                            <span
+                                className="font-semibold text-lg">{product?.rating?.rate}</span>
+                            ({product?.rating?.count} reviews)
+                        </p>
                     </div>
 
-                    <div className="w-full flex justify-between items-center">
-                        <p className="font-semibold text-lg">₹{product?.price}</p>
-                        <p className="text-green-600 bg-green-100 rounded-full flex justify-center items-center px-2 py-[.1rem] text-sm">In Stock</p>
+                    <div className="w-full flex flex-col rounded-lg bg-gray-100 p-3 gap-3 border border-gray-300">
+                        <div className="flex gap-6">
+                            <p className="font-bold text-2xl text-blue-600">
+                                ₹{product?.price}
+                                <span className="text-sm font-semibold text-gray-700 line-through"> ₹{product?.price && (product?.price + product?.price * 10 / 100).toFixed(2)}</span>
+                            </p>
+                            <span
+                                className="bg-green-100 border text-sm border-green-300 rounded-md text-green-600 px-2 py-1 font-semibold">
+                                10% OFF
+                            </span>
+                        </div>
+                        <span className="text-gray-500">Inclusive of all taxes</span>
                     </div>
-                    <p className="leading-relaxed">{product?.description}</p>
-                    <div className="w-full pt-3 items-center flex gap-4 justify-end mt-8">
-                        <Button
-                            type="button"
-                            text='Add to Cart'
-                            onClick={handleAddToCart}
-                        />
+                    <div>
+                        <span className="text-lg font-semibold">
+                            Description
+                        </span>
+                        <p className="leading-relaxed mt-2">{product?.description}</p>
                     </div>
-                </div>
+                    <div className="flex flex-col bg-green-100 rounded-md text-green-600 px-3 py-1 border border-green-300">
+                        <span
+                            className="font-semibold">
+                            In Stock
+                        </span>
+                        <span className="text-sm">
+                            Free Delivery
+                        </span>
+
+                    </div>
+                    <div className="w-full pt-3 items-center flex gap-4 mt-4">
+                        <button
+                            className="text-white rounded-full h-12 w-32 lg:h-16 lg:w-50 bg-blue-600 text-lg hover:bg-blue-500 cursor-pointer"
+                            onClick={handleAddToCart}>
+                            Add to Cart
+                        </button>
+                        <button
+                            className="text-blue-600 border-2 h-12 w-32 lg:h-16 lg:w-50 border-blue-600 text-lg rounded-full hover:bg-gray-50 cursor-pointer">
+                            Buy Now
+                        </button>
+                    </div>
+                </motion.div>
             </div>
         </Container>
     )
 }
 
 export default ProductInDetail
+
 

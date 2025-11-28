@@ -14,13 +14,15 @@ const App = () => {
 
   const { isSidebarOpen } = context
   return (
-    <>
+    <div className='flex flex-col h-screen'>
       <Header />
       <Toaster />
       {isSidebarOpen && <Sidebar />}
-      <Outlet />
+      <main className='flex-1'>
+        <Outlet />
+      </main>
       <Footer />
-    </>
+    </div>
   )
 }
 

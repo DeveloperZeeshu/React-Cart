@@ -1,9 +1,8 @@
-import { MdDelete } from "react-icons/md"
-import Input from "./Input"
 import type { AddToCart } from "../../types/product"
 import { useNavigate } from "react-router-dom"
-import { useContext, useState, type ChangeEvent } from "react"
-import { AppContext } from "../../context/AppContext"
+import { useAppContext } from "../../context/AppContext"
+import { motion } from 'motion/react'
+import { Minus, Plus } from "lucide-react"
 
 interface CartItemCardProps {
     product: AddToCart
@@ -11,31 +10,19 @@ interface CartItemCardProps {
 
 const CartItemCard = ({ product }: CartItemCardProps) => {
     const navigate = useNavigate()
-    const context = useContext(AppContext)
-    if (!context)
-        throw new Error('Context Error.')
 
-    const { removeFromCart, editQuantity } = context
+    const { removeFromCart, editQuantity } = useAppContext()
 
-    const { image, price, quantity: qty, title } = product
+    const { image, price, quantity, title } = product
 
-    const [quantity, setQuantity] = useState<number>(qty)
-
-    const truncatedTitle = title.length > 35
-        ? title.slice(0, 35) + '...'
-        : title
-
-    const handleQuantityChange = (e: ChangeEvent<HTMLInputElement>) => {
-        const newQuantity = Number(e.target.value)
-
-        setQuantity(newQuantity)
-
-        editQuantity(product.id, newQuantity)
-    }
+    const truncatedTitle = title ? (title.length > 35
+        ? title?.slice(0, 35) + '...'
+        : title) : null
 
     return (
-        <div className="flex flex-col lg:flex-row p-4 items-center justify-between gap-6 border rounded-lg border-gray-400 w-full bg-white">
-            <div className="flex gap-3 justify-between items-center lg:gap-6 w-full">
+        <motion.div
+            className="flex flex-col lg:flex-row p-4 gap-6 shadow-md hover:shadow-lg rounded-lg w-full bg-white justify-center items-center">
+            <div className="gap-3 lg:gap-6 w-full flex justify-center items-center">
                 <img
                     className="h-24 w-24 rounded-lg object-contain"
                     src={image}
@@ -43,42 +30,45 @@ const CartItemCard = ({ product }: CartItemCardProps) => {
                     loading="lazy"
                     decoding="async"
                 />
-                <div className="flex flex-col items-start gap-3 flex-1">
+                <div className="flex flex-col items-start gap-2 flex-1">
                     <h3
                         onClick={() => navigate(`/product/${product.id}`)}
                         className="font-medium text-base cursor-pointer hover:text-gray-700">
                         {truncatedTitle}
                     </h3>
-                    <p className="text-green-800 bg-green-100 rounded-full px-3 py-0.5 text-xs">In Stock</p>
+                    <p className="text-sm">{price} x {quantity} = {price && price * quantity}</p>
+                    <p className="text-green-800 bg-green-100 rounded-full px-3 py-1 text-xs">In Stock</p>
                 </div>
             </div>
 
             <div className="flex justify-between items-center w-full lg:w-auto gap-3 lg:gap-6">
-                <p className="text-base font-semibold whitespace-nowrap">
-                    ₹{price}
-                </p>
 
-                <Input
-                    type="number"
-                    placeholder="Qty."
-                    className="w-20"
-                    w='w-auto'
-                    value={quantity}
-                    min={1}
-                    onChange={handleQuantityChange}
-                />
+                <div className="flex justify-center items-center gap-2">
+                    <button
+                        onClick={() => editQuantity(product.id, quantity - 1)}
+                        disabled={quantity <= 1}>
+                        <Minus
+                            className="bg-gray-300 rounded-sm p-1 cursor-pointer hover:bg-gray-400" />
+                    </button>
+                    <p className="text-lg"
+                    >{quantity}
+                    </p>
+                    <button
+                        onClick={() => editQuantity(product.id, quantity + 1)}>
+                        <Plus
+                            className="bg-gray-300 rounded-sm p-1 cursor-pointer hover:bg-gray-400" />
+                    </button>
+                </div>
 
-                <p className="font-semibold text-lg whitespace-nowrap">
-                    ₹{price * qty}
-                </p>
                 <button
                     aria-label="deleteItem"
+                    className="px-3 py-1.5 text-white cursor-pointer hover:bg-red-500 rounded-md bg-red-600"
                     onClick={() => removeFromCart(product.id)}
-                    className="text-red-600 text-2xl hover:opacity-70">
-                    <MdDelete aria-hidden='true' />
+                >
+                    Remove
                 </button>
             </div>
-        </div>
+        </motion.div>
     )
 }
 
