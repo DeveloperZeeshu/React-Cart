@@ -71,23 +71,23 @@ const Home = () => {
 
     return (
         <Container>
-            <h1 className="text-3xl font-bold">Discover the Best Deals</h1>
-            <p className="text-gray-600 mb-10">Find the best products at amazing prices.</p>
 
             <motion.form
+                action='/'
                 variants={fromRightVariants}
                 initial='hidden'
                 animate='show'
-                className="flex gap-4 w-full max-w-xl mb-12">
+                className="flex gap-3 justify-center w-full mb-5">
                 <Input
                     type="search"
-                    className="w-full shadow-lg"
+                    className="w-full min-w-60 lg:w-90 shadow-lg rounded-full"
                     placeholder="Search for product e.g., men's t'shirt"
+                    required
                 />
                 <button
                     type="submit"
                     aria-label="search"
-                    className="text-2xl px-3 rounded-lg cursor-pointer hover:bg-blue-500 bg-blue-600 text-white shadow-lg"
+                    className="text-2xl px-3 rounded-full cursor-pointer hover:bg-blue-500 bg-blue-600 text-white shadow-lg"
                 >
                     <Search size={19}/>
                 </button>

@@ -27,7 +27,7 @@ const ProductCard = ({ product }: ProductCardProps) => {
             whileHover={{ scale: 1.03 }}
             whileTap={{ scale: 0.97 }}
 
-            className="w-70 gap-3 shadow-lg hover:shadow-xl rounded-lg flex flex-col justify-center items-center pb-4 transition-all duration-300 transform hover:-translate-y-.9 h-auto bg-white product-card cursor-pointer"
+            className="max-w-70 gap-3 shadow-lg hover:shadow-xl rounded-lg flex flex-col justify-center items-center pb-4 transition-all duration-300 transform hover:-translate-y-.9 h-auto bg-white product-card cursor-pointer"
             onClick={() => navigate(`/product/${product.id}`)}>
 
             <div className="h-full w-full bg-gray-50 flex justify-center items-center">

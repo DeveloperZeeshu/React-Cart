@@ -1,6 +1,5 @@
-import { useContext } from "react"
 import { Link, NavLink, useNavigate } from "react-router-dom"
-import { AppContext } from "../../../context/AppContext"
+import { useAppContext } from "../../../context/AppContext"
 import { Menu, ShoppingCart } from "lucide-react"
 
 interface NavItem {
@@ -8,28 +7,26 @@ interface NavItem {
     slug: string
 }
 
+const navItems: NavItem[] = [
+    {
+        name: 'Home',
+        slug: '/'
+    },
+    {
+        name: 'Products',
+        slug: '/products?category=%5B"all"%5D&sort=all'
+    },
+    {
+        name: 'About Us',
+        slug: '/about'
+    },
+]
+
 const Header = () => {
     const navigate = useNavigate()
-    const context = useContext(AppContext)
-    if (!context)
-        throw new Error('Context Error.')
 
-    const { cartItems, openSidebar } = context
+    const { cartItems, openSidebar } = useAppContext()
 
-    const navItems: NavItem[] = [
-        {
-            name: 'Home',
-            slug: '/'
-        },
-        {
-            name: 'Products',
-            slug: '/products'
-        },
-        {
-            name: 'About Us',
-            slug: '/about'
-        },
-    ]
     return (
         <header className="flex justify-between items-center px-6 py-6 shadow-lg fixed w-full bg-white z-20 rounded-b-xl">
             <div>
@@ -49,12 +46,12 @@ const Header = () => {
             </nav>
             <div className="flex gap-6">
                 <div className="flex">
-                    <span className="absolute h-4.5 flex justify-center items-center w-4.5 -mt-2 ml-3.5 text-white bg-blue-500 rounded-full">{cartItems.length}</span>
-                    <ShoppingCart 
-                    aria-hidden='true' 
-                    onClick={() => navigate('/cart')} 
-                    className="cursor-pointer"
-                    size={27} 
+                    <span className="absolute h-4.5 flex justify-center items-center w-4.5 -mt-2 ml-3.5 text-white bg-blue-600 rounded-full">{cartItems.length}</span>
+                    <ShoppingCart
+                        aria-hidden='true'
+                        onClick={() => navigate('/cart')}
+                        className="cursor-pointer"
+                        size={27}
                     />
                 </div>
                 <Menu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open" />

@@ -1,6 +1,8 @@
-import { createContext, useCallback, useContext, useState, type ReactNode, type SetStateAction } from "react";
+import { createContext, useCallback, useContext, useMemo, useState, type ChangeEvent, type ReactNode, type SetStateAction } from "react";
 import type { AddToCart, Product } from "../types/product";
 import toast from "react-hot-toast";
+import { useSearchParams } from "react-router-dom";
+import type { CategoriesType } from "../components/ui/FilterProducts";
 
 interface AppProviderProps {
     children: ReactNode
@@ -14,6 +16,9 @@ interface AppContextType {
     isSidebarOpen: boolean
     quantity: number
     productLoading: boolean
+    sortBy: string
+    category: string[]
+    updatedProducts: Product[]
 
     addToCart: (finalProduct: AddToCart) => void
     setQuantity: (value: SetStateAction<number>) => void
@@ -23,16 +28,31 @@ interface AppContextType {
     fetchProductById: (id?: number) => Promise<void>
     openSidebar: () => void
     closeSidebar: () => void
+    handleSortChange: (e: ChangeEvent<HTMLSelectElement>) => void
+    handleCategoryChange: (item: CategoriesType) => void
 }
 
 export const AppContext = createContext<AppContextType | null>(null)
 
 const AppProvider = ({ children }: AppProviderProps) => {
+    const [searchParams, setSearchParams] = useSearchParams()
+
     const [products, setProducts] = useState<Product[]>([])
     const [product, setProduct] = useState<Product | null>(null)
     const [loading, setLoading] = useState(true)
     const [productLoading, setProductLoading] = useState<boolean>(true)
+
     const [isSidebarOpen, setIsSidebarOpen] = useState(false)
+
+    const [category, setCategory] = useState<string[]>(() => {
+        const categories = searchParams.get('category')
+        return categories ? JSON.parse(categories) : ['all']
+    })
+    const [sortBy, setSortBy] = useState<string>(() => {
+        const sort = searchParams.get('sort')
+        return sort ? sort : 'all'
+    })
+
     const [quantity, setQuantity] = useState<number>(1)
     const [cartItems, setCartItems] = useState<AddToCart[]>(() => {
         const items = localStorage.getItem('cart_items')
@@ -127,6 +147,56 @@ const AppProvider = ({ children }: AppProviderProps) => {
         toast.success('Product removed successfully.')
     }
 
+    const handleSortChange = (e: ChangeEvent<HTMLSelectElement>) => {
+        const newSort = e.target.value
+        setSortBy(newSort)
+        const newSearchParams = new URLSearchParams(searchParams)
+        newSearchParams.set('sort', newSort)
+        setSearchParams(newSearchParams)
+    }
+
+    const handleCategoryChange = (item: CategoriesType) => {
+        const newSearchParams = new URLSearchParams(searchParams)
+
+        let updatedCateg = [...category]
+        if (item.slug === 'all')
+            updatedCateg = ['all']
+
+        else if (updatedCateg.includes(item.slug)) {
+            updatedCateg = updatedCateg.filter(ct =>
+                ct !== item.slug
+            )
+            if (updatedCateg.length === 0) updatedCateg.push('all')
+        } else {
+            updatedCateg.push(item.slug)
+            updatedCateg = updatedCateg.filter(ct =>
+                ct !== 'all'
+            )
+        }
+
+        setCategory(updatedCateg)
+        newSearchParams.set('category', JSON.stringify(updatedCateg))
+        setSearchParams(newSearchParams)
+    }
+
+    const updatedProducts = useMemo(() => {
+        let existingProd = [...products]
+
+        if (sortBy === 'price_asc') {
+            existingProd.sort((a, b) => a.price - b.price)
+        } else if (sortBy === 'price_desc') {
+            existingProd.sort((a, b) => b.price - a.price)
+        }
+
+        if (!category.includes('all')) {
+            existingProd = existingProd.filter(item =>
+                category.includes(item.category)
+            )
+        }
+
+        return existingProd
+    }, [products, sortBy, category])
+
     return <AppContext.Provider value={{
         products,
         loading,
@@ -142,7 +212,12 @@ const AppProvider = ({ children }: AppProviderProps) => {
         isSidebarOpen,
         openSidebar,
         productLoading,
-        closeSidebar
+        sortBy,
+        category,
+        closeSidebar,
+        handleSortChange,
+        handleCategoryChange,
+        updatedProducts
     }}>
         {children}
     </AppContext.Provider>

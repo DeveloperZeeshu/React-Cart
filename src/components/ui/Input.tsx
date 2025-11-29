@@ -13,12 +13,12 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
     label = '',
     placeholder = '',
     className = '',
-    w = 'w-full',
+    w = 'w-auto',
     ...props
 }, ref) => {
     const id = useId()
     return (
-        <div className={`${w}`}>
+        <div className={``}>
             {label && (
                 <label
                     className="block mb-1 text-sm font-medium text-gray-700"
@@ -31,7 +31,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
                 ref={ref}
                 type={type}
                 placeholder={placeholder}
-                className={`border bg-white border-gray-300 rounded-lg h-11 px-4 py-2.5 ${className}`}
+                className={`border border-gray-300 bg-white focus:border-blue-600 focus:outline-none h-11 px-4 py-2.5 ${className}`}
                 {...props}
             />
         </div>

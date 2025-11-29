@@ -1,6 +1,6 @@
 import { useParams } from "react-router-dom"
 import Container from "../components/container/Container"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useAppContext } from "../context/AppContext"
 import { motion } from 'motion/react'
 import { fromLeftVariants, fromRightVariants } from "./Home"
@@ -8,7 +8,10 @@ import { fromLeftVariants, fromRightVariants } from "./Home"
 const ProductInDetail = () => {
     let { id } = useParams()
 
+    const [isDescHidden, setIsDescHidden] = useState<boolean>(true)
     const { product, productLoading, fetchProductById, addToCart } = useAppContext()
+
+    let truncatedDesc = isDescHidden ? product?.description.slice(0, 65) + '...' : product?.description
 
     const handleAddToCart = () => {
         const cartItemInfo = {
@@ -94,7 +97,12 @@ const ProductInDetail = () => {
                         <span className="text-lg font-semibold">
                             Description
                         </span>
-                        <p className="leading-relaxed mt-2">{product?.description}</p>
+                        <p className="leading-relaxed mt-2 overflow-hidden">{truncatedDesc}
+                            <span
+                                onClick={() => setIsDescHidden(prev => !prev)}
+                                className="font-semibold cursor-pointer">
+                                {isDescHidden ? 'more' : 'less'}
+                            </span></p>
                     </div>
                     <div className="flex flex-col bg-green-100 rounded-md text-green-600 px-3 py-1 border border-green-300">
                         <span
