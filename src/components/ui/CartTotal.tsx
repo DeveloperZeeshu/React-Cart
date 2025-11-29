@@ -11,7 +11,7 @@ const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, x: 80 }}
-            animate={{opacity: 1, x: 0}}
+            animate={{ opacity: 1, x: 0 }}
             transition={{
                 duration: 0.6,
                 ease: 'easeOut'
@@ -21,10 +21,11 @@ const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
             <h3 className="text-xl font-medium">Cart Total</h3>
             <div className="flex flex-col gap-2">
                 <p className="text-sm text-gray-600">Enter Promo Code</p>
-                <div className="flex gap-3">
+                <div className="flex gap-3 w-full">
                     <Input
+                        w='w-full'
                         type="text"
-                        className="w-full"
+                        className="w-full rounded-lg"
                         placeholder="Enter Promo Code"
                     />
                     <Button

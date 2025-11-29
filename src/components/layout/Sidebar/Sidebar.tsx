@@ -1,6 +1,5 @@
-import { useContext } from "react"
-import { Link } from "react-router-dom"
-import { AppContext } from "../../../context/AppContext"
+import { NavLink } from "react-router-dom"
+import { useAppContext } from "../../../context/AppContext"
 import { X } from "lucide-react"
 
 interface NavItem {
@@ -9,11 +8,8 @@ interface NavItem {
 }
 
 const Sidebar = () => {
-    const context = useContext(AppContext)
-    if (!context)
-        throw new Error('Context Error.')
 
-    const { closeSidebar } = context
+    const { closeSidebar } = useAppContext()
 
     const navItems: NavItem[] = [
         {
@@ -31,13 +27,18 @@ const Sidebar = () => {
     ]
     return (
         <div className="fixed z-20 bg-white right-4 top-4 p-4 rounded-lg shadow-lg w-60">
-            <X 
-            onClick={closeSidebar} className="text-2xl mb-6" aria-label="close" 
+            <X
+                onClick={closeSidebar} className="text-2xl mb-6" aria-label="close"
             />
             <div className="flex flex-col gap-2 items-center">
                 {
                     navItems.map(item => (
-                        <Link onClick={closeSidebar} key={item.name} to={item.slug}>{item.name}</Link>
+                        <NavLink onClick={closeSidebar}
+                            className={({ isActive }) => `${isActive ? 'font-bold text-blue-600' : ''}`}
+                            key={item.name}
+                            to={item.slug}>
+                            {item.name}
+                        </NavLink>
                     ))
                 }
             </div>

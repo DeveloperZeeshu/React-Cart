@@ -79,7 +79,7 @@ const Cart = () => {
                         variants={containerVariants}
                         initial="hidden"
                         animate="show"
-                        className="flex flex-col gap-4">
+                        className="flex flex-col gap-4 w-full">
                         {
                             cartItems?.map(item => (
                                 <motion.div

@@ -26,7 +26,7 @@ const Products = () => {
 
     return (
         <Container>
-            <div className="flex flex-col lg:flex-row gap-8 justify-center items-start">
+            <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start">
                 {<FilterProducts />}
 
                 <motion.div

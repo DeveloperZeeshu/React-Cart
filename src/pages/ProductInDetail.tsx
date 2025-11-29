@@ -101,7 +101,7 @@ const ProductInDetail = () => {
                             <span
                                 onClick={() => setIsDescHidden(prev => !prev)}
                                 className="font-semibold cursor-pointer">
-                                {isDescHidden ? 'more' : 'less'}
+                                {isDescHidden ? 'more' : '...less'}
                             </span></p>
                     </div>
                     <div className="flex flex-col bg-green-100 rounded-md text-green-600 px-3 py-1 border border-green-300">

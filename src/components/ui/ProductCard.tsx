@@ -1,8 +1,6 @@
 import type { Product } from "../../types/product"
 import { useNavigate } from "react-router-dom"
-import { useContext } from "react"
 import { motion } from 'motion/react'
-import { AppContext } from "../../context/AppContext"
 import { fromLeftVariants } from "../../pages/Home"
 
 interface ProductCardProps {
@@ -12,9 +10,6 @@ interface ProductCardProps {
 const ProductCard = ({ product }: ProductCardProps) => {
     const { image, title, price } = product
     const navigate = useNavigate()
-    const context = useContext(AppContext)
-    if (!context)
-        throw new Error('Context Error.')
 
     const newTitle = title.length > 35 ? title.slice(0, 35) + '...' : title
     return (

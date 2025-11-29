@@ -70,6 +70,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
     //Fetching Products
 
     const fetchProductById = useCallback(async (id?: number) => {
+        setProductLoading(true)
         try {
             const res = await fetch(`${import.meta.env.VITE_API}/products/${id}`)
             const data: Product = await res.json()

@@ -18,7 +18,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(({
 }, ref) => {
     const id = useId()
     return (
-        <div className={``}>
+        <div className={w}>
             {label && (
                 <label
                     className="block mb-1 text-sm font-medium text-gray-700"
