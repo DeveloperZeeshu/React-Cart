@@ -55,33 +55,35 @@ const Home = () => {
 
     return (
         <Container>
-            <div className="w-full flex justify-between items-end">
-                <h1 className="text-2xl font-bold mb-3">Products</h1>
-                <p className="mb-2 hidden lg:flex">Showing {updatedProducts.length} products</p>
-            </div>
-            <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start">
-                {<FilterProducts />}
+            <div className="px-4 lg:px-0">
+                <div className="w-full flex justify-between items-end">
+                    <h1 className="text-2xl font-bold mb-3">Products</h1>
+                    <p className="mb-2 hidden lg:flex">Showing {updatedProducts.length} products</p>
+                </div>
+                <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start">
+                    {<FilterProducts />}
 
-                <div>
-                    <p className="mb-2 lg:hidden">Showing {updatedProducts.length} products</p>
-                    <motion.div
-                        className="grid grid-cols-1 w-full lg:w-auto md:grid-cols-2 lg:grid-cols-3 gap-5">
-                        {
-                            updatedProducts?.map(product => (
-                                <motion.div
-                                    initial="hidden"
-                                    whileInView="show"
-                                    viewport={{ once: true, amount: 0.2 }}
-                                    whileTap={{ scale: 0.97 }}
-                                    className="h-full"
-                                    key={product.id}>
-                                    <ProductCard
-                                        product={product}
-                                    />
-                                </motion.div>
-                            ))
-                        }
-                    </motion.div>
+                    <div>
+                        <p className="mb-2 lg:hidden">Showing {updatedProducts.length} products</p>
+                        <motion.div
+                            className="grid grid-cols-1 w-full lg:w-auto md:grid-cols-2 lg:grid-cols-3 gap-5">
+                            {
+                                updatedProducts?.map(product => (
+                                    <motion.div
+                                        initial="hidden"
+                                        whileInView="show"
+                                        viewport={{ once: true, amount: 0.2 }}
+                                        whileTap={{ scale: 0.97 }}
+                                        className="h-full"
+                                        key={product.id}>
+                                        <ProductCard
+                                            product={product}
+                                        />
+                                    </motion.div>
+                                ))
+                            }
+                        </motion.div>
+                    </div>
                 </div>
             </div>
         </Container >

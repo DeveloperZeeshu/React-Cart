@@ -1,35 +1,69 @@
-# React Cart
+# 🛒 React Cart
 
-This is a basic e-commerce application built with **React** and **TypeScript**.  
-Users can browse products, view details, filter and sort products by category and price, add items to the cart, and manage cart quantities. Cart state is persisted in **localStorage**.
+A modern, minimal **e-commerce web application** built with **React + TypeScript**.  
+Users can browse products, apply filters & sorting, view detailed product information, and manage a shopping cart with persistent state using **localStorage**.
+
+🔗 Live Demo: https://www.reacts-cart.vercel.app
 
 ---
 
-## Features
+## ✨ Features
 
-- Home page displays **4 products** in a grid, each showing:
-  - Product image
-  - Title
-  - Category
-  - Rating
-  - Price
-  - Add to Cart button
-- Clicking on the product image or title redirects to **Product Detail Page**
-- Separate **Products Page** displays all products with multi-category filtering and sorting
-- Sort products by price (ascending/descending)
-- Add to Cart functionality with **quantity input only on the Cart page**
+### 🏠 Home Page
+- Displays **all products** in a responsive grid
+- Each **Product Card** shows only:
+  - 🖼️ Image  
+  - 🏷️ Title  
+  - 💰 Price  
+  - ✅ Availability  
+- **Category filters** and **price sorting** available directly on the Home Page
+
+### 📄 Product Detail Page
+- Full product details
+- Product description
+- Add to Cart button (➕ Add to cart only from here)
+
+### 🛍️ Cart Page
+- View selected products
+- Increase / decrease quantity
 - Remove items from cart
-- Cart state persists in **localStorage**
-- Responsive design for mobile and desktop
-- Notifications using **React Hot Toast**
+- Cart total & item count displayed
+- Cart state **persists using localStorage**
+
+### ✅ General
+- Responsive design for all screen sizes
+- Toast notifications using **React Hot Toast**
+- Clean UI with simple user flow
 
 ---
 
-## Installation / Setup Instructions
+## 🧪 E2E Testing
+Basic **End-to-End testing** is implemented using **Playwright**:
+- Home page loads products  
+- Product detail navigation  
+- Add to cart and view in cart  
 
-1. **Clone the repository:**
+---
+
+## ⚙️ Technologies Used
+
+- ⚛️ React.js
+- 🔐 TypeScript
+- 🔀 React Router
+- 🧠 React Context API (State Management)
+- 📦 FakeStoreAPI (Product Data)
+- 🔔 React Hot Toast (Notifications)
+- 💾 localStorage (Cart Persistence)
+- 🧪 Playwright (E2E Testing)
+
+---
+
+## 🚀 Installation & Setup
+
+1. **Clone the repository**
    ```bash
    git clone https://github.com/DeveloperZeeshu/React-Cart.git
+
 
 2. **Navigate to the project directory:**
    ```bash
@@ -51,47 +85,22 @@ Users can browse products, view details, filter and sort products by category an
    ```bash
     http://localhost:5173
 
-> Make sure you have Node.js (v16 or higher) installed before running the project.
+> Make sure you have Node.js (v18 or higher) installed before running the project.
 
 ---
 
 # How to Use
 
-- Browse products on the Home Page (4 featured products)
-- Click on a product image or title to view Product Details
-- Navigate to the Products Page to see all products
-- Use category checkboxes to filter products
-- Use the sort dropdown to sort products by price
-- Click Add to Cart to add a product to your cart
-- Adjust quantities directly in the Cart Page
-- Remove items from the cart using the Remove button
-- Cart totals and number of items are displayed on the Cart Page
-
-
-# Assumptions & Limitations
-
-- Sorting only works by price (ascending/descending)
-- Quantity input is only available on the Cart page
-- Cart persists only in localStorage, not on a server
-- Filtering and sorting happen via API calls; no local filtering of products
-- Home page displays only 4 products; full product list is on the Products Page
-
-
-# Additional Features
-
-- Cart state persists across page reloads using localStorage
-- Notifications for adding/removing items from cart
-
-
-# Technologies Used
-
-- React.js for UI
-- TypeScript for type safety
-- React Router for navigation
-- React Context API for state management
-- FakeStoreAPI for fetching product data
-- React Hot Toast for notifications
-- Playwright for E2E testing
+- Browse products on the Home Page
+- Filter products by category
+- Sort products by price
+- Click on any product to open the Product Detail Page
+- Add product to cart from the detail page
+- Open the Cart Page to:
+ - Adjust quantities
+ - Remove items
+ - View total price
+- Reload the page — your cart will still be there 
 
 
 ## 🙋‍♂️ Author
