@@ -60,7 +60,7 @@ const Home = () => {
                     <h1 className="text-2xl font-bold mb-3">Products</h1>
                     <p className="mb-2 hidden lg:flex">Showing {updatedProducts.length} products</p>
                 </div>
-                <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start">
+                <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start w-full">
                     {<FilterProducts />}
 
                     <div>
@@ -74,7 +74,7 @@ const Home = () => {
                                         whileInView="show"
                                         viewport={{ once: true, amount: 0.2 }}
                                         whileTap={{ scale: 0.97 }}
-                                        className="h-full"
+                                        className="h-full w-full"
                                         key={product.id}>
                                         <ProductCard
                                             product={product}

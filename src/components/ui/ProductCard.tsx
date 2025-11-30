@@ -16,12 +16,12 @@ const ProductCard = ({ product }: ProductCardProps) => {
         <motion.div
             data-testid='product-card'
             variants={fromLeftVariants}
-            className="w-full gap-3 shadow-lg hover:shadow-xl rounded-lg flex flex-col justify-center items-center pb-4 h-full bg-white product-card cursor-pointer"
+            className="gap-3 shadow-lg hover:shadow-xl rounded-lg flex flex-col justify-center items-center pb-4 h-full bg-white product-card cursor-pointer w-full"
             onClick={() => navigate(`/product/${product.id}`)}>
 
             <div className="h-full w-full rounded-t-lg bg-gray-50 flex justify-center items-center">
                 <motion.img
-                    className="h-64 hover:scale-105 transition-all duration-300 p-4 w-auto object-contain px-4"
+                    className="h-64 w-84 hover:scale-105 transition-all duration-300 p-4  object-contain px-4"
                     src={image}
                     alt={title}
                     loading="lazy"

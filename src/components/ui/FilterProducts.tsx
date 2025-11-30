@@ -53,7 +53,7 @@ const FilterProducts = () => {
     return (
         <div className='w-full lg:w-auto'>
             <button
-                className="bg-blue-600 lg:hidden hover:bg-blue-500 text-white rounded-lg flex justify-center float-end items-center gap-2 cursor-pointer px-3 py-1.5"
+                className="bg-blue-600 lg:hidden hover:bg-blue-500 text-white rounded-lg flex justify-center float-end items-center gap-2 cursor-pointer px-3 py-1.5 mb-3 lg:mb-0"
                 onClick={() => setIsFiltersOpen(prev => !prev)}
             >
                 <span>Filters</span>
