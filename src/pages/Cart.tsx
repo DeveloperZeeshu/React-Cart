@@ -6,8 +6,9 @@ import Button from "../components/ui/Button"
 import { useNavigate } from "react-router-dom"
 import CartTotal from "../components/ui/CartTotal"
 import { motion, type Variants } from 'motion/react'
+import { ArrowLeft } from "lucide-react"
 
-const containerVariants: Variants = {
+export const containerVariants: Variants = {
     hidden: { opacity: 0 },
     show: {
         opacity: 1,
@@ -18,7 +19,7 @@ const containerVariants: Variants = {
     },
 }
 
-const cardVariants: Variants = {
+export const cardVariants: Variants = {
     hidden: { opacity: 0, y: -40 },
     show: {
         opacity: 1,
@@ -63,7 +64,7 @@ const Cart = () => {
                     <Button
                         type="button"
                         text="Shop Now"
-                        onClick={() => navigate('/products')}
+                        onClick={() => navigate('/')}
                     />
                 </div>
             </Container>
@@ -72,38 +73,44 @@ const Cart = () => {
 
     return (
         <Container>
-            <div className="w-full ">
-                <h2 className="text-2xl font-medium mb-4">Cart Items({cartItems.length})</h2>
-                <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:items-start gap-5">
+            <div className="w-full max-w-xl lg:max-w-full lg:w-auto cart-item">
+                <motion.button
+                    onClick={() => navigate('/')}
+                    initial={{opacity: 0}}
+                    animate={{opacity: 1}}
+                    transition={{duration: 2}}
+                    className="flex items-center text-blue-600 mb-2 cursor-pointer">
+                    <ArrowLeft size={19} />
+                    <span>
+                        Go to Home
+                    </span>
+                </motion.button>
+
+                <div className="flex flex-col lg:flex-row w-full items-center lg:items-start gap-5">
                     <motion.div
                         variants={containerVariants}
                         initial="hidden"
                         animate="show"
-                        className="flex flex-col gap-4 w-full">
+                        className="flex flex-col items-center gap-4 w-full lg:w-auto">
                         {
                             cartItems?.map(item => (
-                                <motion.div
+                                <CartItemCard
                                     key={item.id}
-                                    variants={cardVariants}>
-                                    <CartItemCard
-                                        product={item}
-                                    />
-                                </motion.div>
+                                    product={item}
+                                />
                             ))
                         }
                     </motion.div>
                     <CartTotal
                         cartTotal={cartTotal}
                         platformFee={17}
+                        totalItems={cartItems.length}
                     />
                 </div>
             </div>
-        </Container>
+        </Container >
     )
 }
 
 export default Cart
-
-
-
 

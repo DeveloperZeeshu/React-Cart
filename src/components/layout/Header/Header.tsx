@@ -1,6 +1,6 @@
 import { Link, NavLink, useNavigate } from "react-router-dom"
 import { useAppContext } from "../../../context/AppContext"
-import { Menu, ShoppingCart } from "lucide-react"
+import { ShoppingCart } from "lucide-react"
 
 interface NavItem {
     name: string
@@ -10,11 +10,11 @@ interface NavItem {
 const navItems: NavItem[] = [
     {
         name: 'Home',
-        slug: '/'
+        slug: '/?category=all&sort=all'
     },
     {
         name: 'Products',
-        slug: '/products?category=all&sort=all'
+        slug: '/products'
     },
     {
         name: 'About Us',
@@ -25,7 +25,7 @@ const navItems: NavItem[] = [
 const Header = () => {
     const navigate = useNavigate()
 
-    const { cartItems, openSidebar } = useAppContext()
+    const { cartItems } = useAppContext()
 
     return (
         <header className="flex justify-between items-center px-6 py-6 shadow-lg fixed w-full bg-white z-20 rounded-b-xl">
@@ -54,8 +54,6 @@ const Header = () => {
                         size={27}
                     />
                 </div>
-                <Menu onClick={openSidebar} aria-hidden='true' className="text-2xl cursor-pointer lg:hidden" aria-label="open" />
-
             </div>
         </header>
     )

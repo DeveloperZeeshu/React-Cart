@@ -6,7 +6,7 @@ import { useAppContext } from '../../context/AppContext'
 export const filterVariant: Variants = {
     hidden: {
         opacity: 0,
-        transform: 'translateX(-60px)'
+        transform: 'translateX(-30px)'
     },
     show: {
         opacity: 1,
@@ -53,7 +53,7 @@ const FilterProducts = () => {
     return (
         <div className='w-full lg:w-auto'>
             <button
-                className="bg-blue-600 lg:hidden hover:bg-blue-500 text-white rounded-lg flex justify-center items-center gap-2 cursor-pointer px-3 py-1.5"
+                className="bg-blue-600 lg:hidden hover:bg-blue-500 text-white rounded-lg flex justify-center float-end items-center gap-2 cursor-pointer px-3 py-1.5"
                 onClick={() => setIsFiltersOpen(prev => !prev)}
             >
                 <span>Filters</span>
@@ -65,7 +65,7 @@ const FilterProducts = () => {
                 variants={filterVariant}
                 initial='hidden'
                 animate='show'
-                className={`${isFiltersOpen ? 'flex' : 'hidden'} lg:flex flex-col gap-5 rounded-lg w-full h-auto lg:w-75 mt-3`}>
+                className={`${isFiltersOpen ? 'flex' : 'hidden'} lg:flex flex-col gap-5 rounded-lg w-full h-auto lg:w-75 mt-3 lg:mt-0`}>
                 <div className="flex flex-col w-full bg-white rounded-lg shadow-lg p-5 gap-2">
                     <span className="font-medium pb-2 text-xl">Filter by Category</span>
                     {

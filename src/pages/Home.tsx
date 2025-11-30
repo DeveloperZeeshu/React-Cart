@@ -2,26 +2,13 @@ import { useEffect } from "react";
 import Container from "../components/container/Container";
 import ProductCard from "../components/ui/ProductCard";
 import { useAppContext } from "../context/AppContext";
-import Input from "../components/ui/Input";
-import { useNavigate } from "react-router-dom";
-import Button from "../components/ui/Button";
 import { motion, type Variants } from "motion/react";
-import { Search } from "lucide-react";
-
-export const gridVariants: Variants = {
-    hidden: {},
-    show: {
-        transition: {
-            staggerChildren: 0.12,
-            delayChildren: 0.15,
-        },
-    },
-}
+import FilterProducts from "../components/ui/FilterProducts";
 
 export const fromLeftVariants: Variants = {
     hidden: {
         opacity: 0,
-        transform: "translateX(-60px)",
+        transform: "translateX(-30px)",
     },
     show: {
         opacity: 1,
@@ -36,7 +23,7 @@ export const fromLeftVariants: Variants = {
 export const fromRightVariants: Variants = {
     hidden: {
         opacity: 0,
-        transform: 'translateX(60px)'
+        transform: 'translateX(30px)'
     },
     show: {
         opacity: 1,
@@ -47,11 +34,8 @@ export const fromRightVariants: Variants = {
     }
 }
 
-
 const Home = () => {
-    const navigate = useNavigate()
-
-    const { products, fetchAllProducts, loading } = useAppContext()
+    const { loading, updatedProducts, products, fetchAllProducts } = useAppContext()
 
     useEffect(() => {
         if (!products || products.length === 0)
@@ -71,48 +55,36 @@ const Home = () => {
 
     return (
         <Container>
-
-            <motion.form
-                action='/'
-                variants={fromRightVariants}
-                initial='hidden'
-                animate='show'
-                className="flex gap-3 justify-center w-full mb-5">
-                <Input
-                    type="search"
-                    className="w-full min-w-60 lg:w-90 shadow-lg rounded-full"
-                    placeholder="Search for product e.g., men's t'shirt"
-                    required
-                />
-                <button
-                    type="submit"
-                    aria-label="search"
-                    className="text-2xl px-3 rounded-full cursor-pointer hover:bg-blue-500 bg-blue-600 text-white shadow-lg"
-                >
-                    <Search size={19}/>
-                </button>
-            </motion.form>
-
-            <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-10">
-                {
-                    products?.slice(0, 4).map(product => (
-                        <ProductCard
-                            key={product.id}
-                            product={product}
-                        />
-                    ))
-                }
-            </motion.div>
-
-            <div className="flex justify-center">
-                <Button
-                    type="button"
-                    text="Browse All Products..."
-                    onClick={() => navigate('/products')}
-                />
+            <div className="w-full flex justify-between items-end">
+                <h1 className="text-2xl font-bold mb-3">Products</h1>
+                <p className="mb-2 hidden lg:flex">Showing {updatedProducts.length} products</p>
             </div>
-        </Container>
+            <div className="flex flex-col lg:flex-row gap-3 lg:gap-8 justify-center items-start">
+                {<FilterProducts />}
+
+                <div>
+                    <p className="mb-2 lg:hidden">Showing {updatedProducts.length} products</p>
+                    <motion.div
+                        className="grid grid-cols-1 w-full lg:w-auto md:grid-cols-2 lg:grid-cols-3 gap-5">
+                        {
+                            updatedProducts?.map(product => (
+                                <motion.div
+                                    initial="hidden"
+                                    whileInView="show"
+                                    viewport={{ once: true, amount: 0.2 }}
+                                    whileTap={{ scale: 0.97 }}
+                                    className="h-full"
+                                    key={product.id}>
+                                    <ProductCard
+                                        product={product}
+                                    />
+                                </motion.div>
+                            ))
+                        }
+                    </motion.div>
+                </div>
+            </div>
+        </Container >
     )
 }
 

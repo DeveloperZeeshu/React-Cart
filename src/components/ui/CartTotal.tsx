@@ -1,13 +1,13 @@
 import Button from "./Button"
-import Input from "./Input"
 import { motion } from 'motion/react'
 
 interface CartTotalProps {
     cartTotal: number
     platformFee?: number
+    totalItems: number
 }
 
-const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
+const CartTotal = ({ cartTotal, totalItems, platformFee = 17 }: CartTotalProps) => {
     return (
         <motion.div
             initial={{ opacity: 0, x: 80 }}
@@ -16,16 +16,19 @@ const CartTotal = ({ cartTotal, platformFee = 17 }: CartTotalProps) => {
                 duration: 0.6,
                 ease: 'easeOut'
             }}
-            className="shadow-md hover:shadow-lg rounded-lg p-5 h-auto flex flex-col gap-6 max-w-md lg:min-w-md bg-white">
+            className="shadow-md hover:shadow-lg rounded-lg p-5 h-auto flex flex-col gap-6 w-full lg:w-md bg-white">
 
-            <h3 className="text-xl font-medium">Cart Total</h3>
+            <div className="flex justify-between items-center">
+                <h3 className="text-xl font-medium">Cart Total</h3>
+                <p className="font-semibold">({totalItems} Items)</p>
+            </div>
             <div className="flex flex-col gap-2">
-                <p className="text-sm text-gray-600">Enter Promo Code</p>
+                <label htmlFor="promo" className="text-sm text-gray-600">Enter Promo Code</label>
                 <div className="flex gap-3 w-full">
-                    <Input
-                        w='w-full'
+                    <input
+                        id="promo"
                         type="text"
-                        className="w-full rounded-lg"
+                        className="w-full rounded-lg border px-3 border-gray-400 focus:border-blue-600 focus:outline-none"
                         placeholder="Enter Promo Code"
                     />
                     <Button

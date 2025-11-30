@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom"
 import { useAppContext } from "../../context/AppContext"
 import { motion } from 'motion/react'
 import { Minus, Plus } from "lucide-react"
+import { cardVariants } from "../../pages/Cart"
 
 interface CartItemCardProps {
     product: AddToCart
@@ -21,10 +22,14 @@ const CartItemCard = ({ product }: CartItemCardProps) => {
 
     return (
         <motion.div
-            className="flex flex-col lg:flex-row p-4 gap-6 shadow-md hover:shadow-lg rounded-lg w-full bg-white justify-center items-center">
-            <div className="gap-3 lg:gap-6 w-full flex justify-center items-center">
+            variants={cardVariants}
+            className="flex flex-col lg:flex-row p-4 gap-6 shadow-md hover:shadow-lg rounded-lg bg-white justify-center items-center w-full lg:min-w-2xl lg:w-2xl">
+
+            <div
+                className="gap-3 lg:gap-6 flex justify-center items-center w-full">
                 <img
-                    className="h-24 w-24 rounded-lg object-contain"
+                    onClick={() => navigate(`/product/${product.id}`)}
+                    className="h-24 w-24 rounded-lg cursor-pointer object-contain"
                     src={image}
                     alt={title}
                     loading="lazy"
@@ -36,8 +41,8 @@ const CartItemCard = ({ product }: CartItemCardProps) => {
                         className="font-medium text-base cursor-pointer hover:text-gray-700">
                         {truncatedTitle}
                     </h3>
-                    <p className="text-sm">{price} x {quantity} = {price && price * quantity}</p>
-                    <p className="text-green-800 bg-green-100 rounded-full px-3 py-1 text-xs">In Stock</p>
+                    <p className="text-sm">₹{price} x {quantity} = ₹{price && price * quantity}</p>
+                    <p className="text-green-800 bg-green-100 rounded-full px-3 py-1 text-xs border border-green-300">In Stock</p>
                 </div>
             </div>
 

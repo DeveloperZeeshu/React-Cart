@@ -13,7 +13,6 @@ interface AppContextType {
     product?: Product | null
     loading: boolean
     cartItems: AddToCart[]
-    isSidebarOpen: boolean
     quantity: number
     productLoading: boolean
     sortBy: string
@@ -26,8 +25,6 @@ interface AppContextType {
     removeFromCart: (id: number) => void
     fetchAllProducts: () => Promise<void>
     fetchProductById: (id?: number) => Promise<void>
-    openSidebar: () => void
-    closeSidebar: () => void
     handleSortChange: (e: ChangeEvent<HTMLSelectElement>) => void
     handleCategoryChange: (item: CategoriesType) => void
 }
@@ -41,8 +38,6 @@ const AppProvider = ({ children }: AppProviderProps) => {
     const [product, setProduct] = useState<Product | null>(null)
     const [loading, setLoading] = useState(true)
     const [productLoading, setProductLoading] = useState<boolean>(true)
-
-    const [isSidebarOpen, setIsSidebarOpen] = useState(false)
 
     const [category, setCategory] = useState<string[]>(() => {
         const categories = searchParams.get('category')
@@ -58,14 +53,6 @@ const AppProvider = ({ children }: AppProviderProps) => {
         const items = localStorage.getItem('cart_items')
         return items ? JSON.parse(items) : []
     })
-
-    const openSidebar = () => {
-        setIsSidebarOpen(true)
-    }
-
-    const closeSidebar = () => {
-        setIsSidebarOpen(false)
-    }
 
     //Fetching Products
 
@@ -210,12 +197,9 @@ const AppProvider = ({ children }: AppProviderProps) => {
         removeFromCart,
         fetchAllProducts,
         fetchProductById,
-        isSidebarOpen,
-        openSidebar,
         productLoading,
         sortBy,
         category,
-        closeSidebar,
         handleSortChange,
         handleCategoryChange,
         updatedProducts
