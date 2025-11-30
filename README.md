@@ -97,9 +97,10 @@ Basic **End-to-End testing** is implemented using **Playwright**:
 - Click on any product to open the Product Detail Page
 - Add product to cart from the detail page
 - Open the Cart Page to:
-  - Adjust quantities
-  - Remove items
+  - Adjust quantities  
+  - Remove items  
   - View total price
+
 - Reload the page — your cart will still be there 
 
 ---
