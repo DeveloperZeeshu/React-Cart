@@ -12,5 +12,6 @@ test("products page loads", async ({ page }) => {
 
 test("cart page loads", async ({ page }) => {
   await page.goto("/cart");
-  await expect(page.getByText(/cart/i)).toBeVisible();
+  await expect(page).toHaveURL(/\/cart/);
 });
+

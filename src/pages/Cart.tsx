@@ -73,12 +73,14 @@ const Cart = () => {
 
     return (
         <Container>
-            <div className="w-full max-w-xl lg:max-w-full lg:w-auto cart-item">
+            <div
+                data-testid='cart-page'
+                className="w-full max-w-xl lg:max-w-full lg:w-auto cart-item">
                 <motion.button
                     onClick={() => navigate('/')}
-                    initial={{opacity: 0}}
-                    animate={{opacity: 1}}
-                    transition={{duration: 2}}
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ duration: 2 }}
                     className="flex items-center text-blue-600 mb-2 cursor-pointer">
                     <ArrowLeft size={19} />
                     <span>
