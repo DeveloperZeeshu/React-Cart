@@ -41,7 +41,7 @@ const CartItemCard = ({ product }: CartItemCardProps) => {
                         className="font-medium text-base cursor-pointer hover:text-gray-700">
                         {truncatedTitle}
                     </h3>
-                    <p className="text-sm">₹{price} x {quantity} = ₹{price && price * quantity}</p>
+                    <p className="text-sm">₹{price} x {quantity} = ₹{price && (price * quantity).toFixed(2)}</p>
                     <p className="text-green-800 bg-green-100 rounded-full px-3 py-1 text-xs border border-green-300">In Stock</p>
                 </div>
             </div>
