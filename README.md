@@ -3,7 +3,7 @@
 A modern, minimal **e-commerce web application** built with **React + TypeScript**.  
 Users can browse products, apply filters & sorting, view detailed product information, and manage a shopping cart with persistent state using **localStorage**.
 
-🔗 Live Demo: https://www.reacts-cart.vercel.app
+🔗 Live Demo: https://reacts-cart.vercel.app
 
 ---
 
@@ -97,11 +97,12 @@ Basic **End-to-End testing** is implemented using **Playwright**:
 - Click on any product to open the Product Detail Page
 - Add product to cart from the detail page
 - Open the Cart Page to:
- - Adjust quantities
- - Remove items
- - View total price
+  - Adjust quantities
+  - Remove items
+  - View total price
 - Reload the page — your cart will still be there 
 
+---
 
 ## 🙋‍♂️ Author
 Made with ❤️ by Jeesan Abbas
