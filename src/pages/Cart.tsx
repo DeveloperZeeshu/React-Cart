@@ -72,7 +72,7 @@ const Cart = () => {
 
     return (
         <Container>
-            <div className="">
+            <div className="w-full ">
                 <h2 className="text-2xl font-medium mb-4">Cart Items({cartItems.length})</h2>
                 <div className="flex flex-col lg:flex-row w-full justify-between items-center lg:items-start gap-5">
                     <motion.div

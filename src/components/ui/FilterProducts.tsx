@@ -82,6 +82,7 @@ const FilterProducts = () => {
                                     checked={category.includes(item.slug)}
                                     onChange={() => handleCategoryChange(item)}
                                     className="h-5 w-5"
+                                    value={item.slug}
                                     name="category"
                                     type="checkbox"
                                 />

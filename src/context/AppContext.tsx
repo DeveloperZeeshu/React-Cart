@@ -46,7 +46,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
 
     const [category, setCategory] = useState<string[]>(() => {
         const categories = searchParams.get('category')
-        return categories ? JSON.parse(categories) : ['all']
+        return categories ? categories.split(',') : ['all']
     })
     const [sortBy, setSortBy] = useState<string>(() => {
         const sort = searchParams.get('sort')
@@ -176,7 +176,7 @@ const AppProvider = ({ children }: AppProviderProps) => {
         }
 
         setCategory(updatedCateg)
-        newSearchParams.set('category', JSON.stringify(updatedCateg))
+        newSearchParams.set('category', updatedCateg.join(','))
         setSearchParams(newSearchParams)
     }
 

@@ -14,7 +14,7 @@ const navItems: NavItem[] = [
     },
     {
         name: 'Products',
-        slug: '/products?category=%5B"all"%5D&sort=all'
+        slug: '/products?category=all&sort=all'
     },
     {
         name: 'About Us',

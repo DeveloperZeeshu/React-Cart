@@ -7,37 +7,50 @@ test('load products', async ({ page }) => {
 })
 
 test('category filter updates URL', async ({ page }) => {
-    await page.goto('/products')
-    await page.check("input[value='electronics']")
-    await expect(page).toHaveURL(/category=electronics/)
-})
+  await page.goto('/products');
+
+  const electronics = page.locator("input[value='electronics']");
+  await expect(electronics).toBeVisible();
+  await electronics.check();
+
+  await page.waitForURL(/category=electronics/);
+});
 
 test("can select multiple categories", async ({ page }) => {
-    await page.goto("/products");
+  await page.goto("/products");
 
-    await page.check("input[value='electronics']");
-    await page.check("input[value='jewelery']");
+  const electronics = page.locator("input[value='electronics']");
+  const jewelery = page.locator("input[value='jewelery']");
 
-    const url = await page.url();
+  await expect(electronics).toBeVisible();
+  await electronics.check();
 
-    expect(url).toContain("electronics");
-    expect(url).toContain("jewelery");
+  await expect(jewelery).toBeVisible();
+  await jewelery.check();
+
+  await page.waitForURL(/electronics/);
+  await page.waitForURL(/jewelery/);
+
+  const url = page.url();
+  expect(url).toContain("electronics");
+  expect(url).toContain("jewelery");
 });
 
 test('sort updates URL', async ({ page }) => {
     await page.goto('/products')
-    await page.selectOption('#sort', 'price_aesc')
-    await expect(page).toHaveURL(/sort=price_aesc/)
+    await page.selectOption('#sort', 'price_asc')
+    await expect(page).toHaveURL(/sort=price_asc/)
 })
 
 test('filters persist after refresh', async ({ page }) => {
-    await page.goto('/products?category=electronics&sort=price_desc');
+  await page.goto('/products?category=electronics&sort=price_desc');
 
-    await page.waitForSelector('input[value="electronics"]')
+  const electronics = page.locator('input[value="electronics"]');
+  await expect(electronics).toBeVisible();
 
-    await page.reload()
+  await page.reload({ waitUntil: 'networkidle' });
 
-    await expect(page.locator('input[value="electronics"]')).toBeChecked();
-    await expect(page.locator('#sort')).toHaveValue('price_desc');
+  await expect(electronics).toBeChecked();
+  await expect(page.locator('#sort')).toHaveValue('price_desc');
 });
 
