@@ -39,9 +39,13 @@ Users can browse products, apply filters & sorting, view detailed product inform
 
 ## 🧪 E2E Testing
 Basic **End-to-End testing** is implemented using **Playwright**:
-- Home page loads products  
-- Product detail navigation  
-- Add to cart and view in cart  
+- Application loads successfully.
+- Products page renders and displays the "Products" text.
+- Cart page loads and navigates to `/cart` route correctly.
+
+### How to Run Tests:
+```bash
+npx playwright test 
 
 ---
 
