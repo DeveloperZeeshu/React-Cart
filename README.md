@@ -43,9 +43,10 @@ Basic **End-to-End testing** is implemented using **Playwright**:
 - Products page renders and displays the "Products" text.
 - Cart page loads and navigates to `/cart` route correctly.
 
-### How to Run Tests:
+### ▶️ How to Run Tests
 ```bash
-npx playwright test 
+npx playwright test
+```
 
 ---
 
